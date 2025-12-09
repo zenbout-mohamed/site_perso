@@ -30,19 +30,24 @@ function Home() {
       {products.length === 0 && !error && <p>Chargement...</p>}
 
       {products.map(p => (
-        <div
+        <a
           key={p.id}
-          style={{
-            border: "1px solid #ddd",
-            padding: "10px",
-            margin: "10px",
-            borderRadius: "8px"
-          }}
+          href={`/product/${p.id}`}
+          style={{ textDecoration: "none", color: "inherit" }}
         >
-          <h3>{p.name}</h3>
-          <p>{p.description}</p>
-          <strong>{p.price} €</strong>
-        </div>
+          <div
+            style={{
+              border: "1px solid #ddd",
+              padding: "10px",
+              margin: "10px",
+              borderRadius: "8px",
+              display: "block"
+            }}
+          >
+            <h3>{p.name}</h3>
+            <strong>{p.price} €</strong>
+          </div>
+        </a>
       ))}
     </div>
   );
