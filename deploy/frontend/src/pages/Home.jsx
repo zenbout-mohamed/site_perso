@@ -1,38 +1,34 @@
+// frontend/src/pages/Home.jsx
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    console.log("➡️ Appel API lancé...");
-
-    fetch("http://localhost:3001/products")
-      .then(res => {
-        console.log("➡️ Réponse brute :", res);
-        return res.json();
-      })
-      .then(data => {
-        console.log("➡️ Données reçues :", data);
-        setProducts(data);
-      })
-      .catch(err => {
-        console.error("❌ Erreur API :", err);
-        setError(err.toString());
-      });
+    fetch("http://localhost:3001/products", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => setProducts(data))
+      .catch((err) => setError(err.toString()));
   }, []);
 
   return (
-    <div>
+    <div style={{ padding: "20px" }}>
       <h1>Produits</h1>
 
+      <button onClick={() => (window.location.href = "/cart")}>
+        🛒 Panier
+      </button>
+
       {error && <p style={{ color: "red" }}>Erreur : {error}</p>}
+
       {products.length === 0 && !error && <p>Chargement...</p>}
 
-      {products.map(p => (
-        <a
+      {products.map((p) => (
+        <Link
           key={p.id}
-          href={`/product/${p.id}`}
+          to={`/product/${p.id}`}
           style={{ textDecoration: "none", color: "inherit" }}
         >
           <div
@@ -41,13 +37,12 @@ function Home() {
               padding: "10px",
               margin: "10px",
               borderRadius: "8px",
-              display: "block"
             }}
           >
             <h3>{p.name}</h3>
             <strong>{p.price} €</strong>
           </div>
-        </a>
+        </Link>
       ))}
     </div>
   );
