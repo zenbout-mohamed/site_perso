@@ -18,6 +18,15 @@ function Product() {
 
   if (!product) return <p>Chargement...</p>;
 
+function addToCart() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push(product);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert("Produit ajouté !");
+}
+
+
+
   return (
     <div className="product-card">
       <h1>{product.name}</h1>
