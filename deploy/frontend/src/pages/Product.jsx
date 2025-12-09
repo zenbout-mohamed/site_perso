@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 function Product() {
-  const { id } = useParams(); // récupère l'id dans l'URL
+  const { id } = useParams(); 
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
@@ -15,24 +15,26 @@ function Product() {
       .catch(err => console.error("Erreur API :", err));
   }, [id]);
 
-  if (!product)
+  if (!product) {
     return <p>Chargement...</p>;
+  }
 
   return (
     <div style={{ maxWidth: "400px", margin: "30px" }}>
-      <h2>{product.name}</h2>
+      <h1>{product.name}</h1>
       <p>{product.description}</p>
-      <strong>{product.price} €</strong>
+      <p><strong>{product.price} €</strong></p>
 
       <button
         style={{
           marginTop: "20px",
-          padding: "10px 20px",
+          padding: "12px 20px",
           borderRadius: "8px",
           border: "none",
           background: "#4F8",
           cursor: "pointer",
-          fontSize: "18px"
+          fontSize: "18px",
+          fontWeight: "bold",
         }}
       >
         Ajouter au panier
