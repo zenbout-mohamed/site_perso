@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import "./Product.css"; 
+import "./Product.css";
 
 function Product() {
   const { id } = useParams();
@@ -18,14 +18,12 @@ function Product() {
 
   if (!product) return <p>Chargement...</p>;
 
-function addToCart() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart.push(product);
-    localStorage.setItem("cart", JSON.stringify(cart));
-    alert("Produit ajouté !");
-}
-
-
+  function AddToCart() {
+    const currentCart = JSON.parse(localStorage.getItem("cart")) || [];
+    const newCart = [...currentCart, product];
+    localStorage.setItem("cart", JSON.stringify(newCart));
+    alert("Produit ajouté au panier");
+  }
 
   return (
     <div className="product-card">
@@ -33,7 +31,7 @@ function addToCart() {
       <p>{product.description}</p>
       <p><strong>{product.price} €</strong></p>
 
-      <button>
+      <button onClick={AddToCart}>
         Ajouter au panier
       </button>
     </div>

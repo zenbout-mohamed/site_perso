@@ -1,46 +1,41 @@
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import "./Cart.css";
+import "./Product.css";
 
-function Cart() {
-  const [cart, setCart] = useState([]);
+function Product() {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("cart")) || [];
-    setCart(stored);
-  }, []);
+    fetch("http://localhost:3001/products")
+      .then(res => res.json())
+      .then(data => {
+        const p = data.find(item => item.id == id);
+        setProduct(p);
+      })
+      .catch(err => console.error("Erreur API :", err));
+  }, [id]);
 
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  if (!product) return <p>Chargement...</p>;
+
+  function handleAddToCart() {
+    const currentCart = JSON.parse(localStorage.getItem("cart")) || [];
+    const newCart = [...currentCart, product];
+    localStorage.setItem("cart", JSON.stringify(newCart));
+    alert("Produit ajouté au panier");
+  }
 
   return (
-    <div className="cart-container">
-      <h1>Mon Panier</h1>
+    <div className="product-card">
+      <h1>{product.name}</h1>
+      <p>{product.description}</p>
+      <p><strong>{product.price} €</strong></p>
 
-      {cart.length === 0 && <p>Votre panier est vide.</p>}
-
-      {cart.map((item, index) => (
-        <div key={index} className="cart-item">
-          <h3>{item.name}</h3>
-          <p>{item.price} €</p>
-        </div>
-      ))}
-
-      {cart.length > 0 && (
-        <>
-          <h2>Total : {total.toFixed(2)} €</h2>
-
-          <button
-            className="clear-btn"
-            onClick={() => {
-              localStorage.removeItem("cart");
-              setCart([]);
-            }}
-          >
-            Vider le panier
-          </button>
-        </>
-      )}
+      <button onClick={handleAddToCart}>
+        Ajouter au panier
+      </button>
     </div>
   );
 }
 
-export default Cart;
+export default Product;
