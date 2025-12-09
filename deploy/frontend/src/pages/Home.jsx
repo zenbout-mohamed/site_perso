@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -17,12 +16,7 @@ function Home() {
     <div style={{ padding: "20px" }}>
       <h1>Produits</h1>
 
-      <button onClick={() => (window.location.href = "/cart")}>
-        🛒 Panier
-      </button>
-
       {error && <p style={{ color: "red" }}>Erreur : {error}</p>}
-
       {products.length === 0 && !error && <p>Chargement...</p>}
 
       {products.map((p) => (
@@ -37,6 +31,7 @@ function Home() {
               padding: "10px",
               margin: "10px",
               borderRadius: "8px",
+              display: "block",
             }}
           >
             <h3>{p.name}</h3>
