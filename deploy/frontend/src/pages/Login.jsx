@@ -14,6 +14,7 @@ function Login() {
     setLoading(true);
 
     try {
+      // Requête login
       const res = await fetch("http://localhost:3001/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -22,11 +23,22 @@ function Login() {
 
       const data = await res.json();
 
+      // Vérification erreur login
       if (!res.ok || !data.ok) {
         throw new Error(data.message || "Erreur de connexion");
       }
 
+      // Stockage user dans localStorage
       localStorage.setItem("user", JSON.stringify(data.user));
+
+      // Récupération du panier côté backend
+      const cartRes = await fetch(`http://localhost:3001/cart/${data.user.id}`);
+      const cartData = await cartRes.json();
+
+      // Stockage du panier dans localStorage
+      localStorage.setItem("cart", JSON.stringify(cartData.cart));
+
+      // Redirection vers l'accueil
       navigate("/");
     } catch (err) {
       setError(err.message);
