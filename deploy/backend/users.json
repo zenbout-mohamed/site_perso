@@ -3,6 +3,13 @@
     "id": 1,
     "email": "demo@boutique.test",
     "password": "$2b$10$IGCGf/Ezc8dXBXsNSxZ1aeNVHt.aOAUUi5FYfgGSZEACtVz6/cdza",
-    "name": "Visiteur"
+    "name": "Visiteur",
+    "cart": []
   }
 ]
+
+
+
+
+
+
