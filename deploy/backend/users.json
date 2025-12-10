@@ -4,12 +4,21 @@
     "email": "demo@boutique.test",
     "password": "$2b$10$IGCGf/Ezc8dXBXsNSxZ1aeNVHt.aOAUUi5FYfgGSZEACtVz6/cdza",
     "name": "Visiteur",
-    "cart": []
+    "cart": [
+      {
+        "id": 1,
+        "name": "Chaussures de sport",
+        "description": "Chaussures légères et confortables",
+        "price": 59.99,
+        "image": "shoe.jpg"
+      },
+      {
+        "id": 2,
+        "name": "T-shirt Premium",
+        "description": "T-shirt 100% coton de haute qualité",
+        "price": 29.99,
+        "image": "shirt.jpg"
+      }
+    ]
   }
 ]
-
-
-
-
-
-
