@@ -98,7 +98,38 @@ app.post("/products", (req, res) => {
   res.status(201).json(newProduct);
 });
 
-// Lancmeent serveur
+// Route Login
+app.post("/login", (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({
+      ok: false,
+      message: "email et password sont obligatoires"
+    });
+  }
+
+  const users = readUsers();
+  const user = users.find((u) => u.email === email);
+
+  if (!user || user.password !== password) {
+    return res.status(401).json({
+      ok: false,
+      message: "Email ou mot de passe invalide"
+    });
+  }
+
+  return res.json({
+    ok: true,
+    user: {
+      id: user.id,
+      email: user.email,
+      name: user.name
+    }
+  });
+});
+
+// Lancement serveur
 app.listen(port, () => {
   console.log(`API lancée sur http://localhost:${port}`);
 });
