@@ -17,28 +17,37 @@ function Product() {
       .catch((err) => setError(err.toString()));
   }, [id]);
 
-  if (error)
-    return <p style={{ color: "red" }}>Erreur : {error}</p>;
-
+  if (error) return <p style={{ color: "red" }}>Erreur : {error}</p>;
   if (!product) return <p>Chargement...</p>;
 
-  function handleAddToCart() {
-    const currentCart = JSON.parse(localStorage.getItem("cart")) || [];
-    const newCart = [...currentCart, product];
-    localStorage.setItem("cart", JSON.stringify(newCart));
-    alert("Produit ajouté au panier");
+  function addToCart() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push(product);
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      fetch(`http://localhost:3001/cart/${user.id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cart }),
+      });
+    }
+
+    alert("Produit ajouté !");
   }
 
   return (
-    <div className="product-card">
+    <div className="product-container">
       <h1>{product.name}</h1>
       <p>{product.description}</p>
-      <strong>{product.price} €</strong>
+      <p>{product.price} €</p>
 
-      <button onClick={handleAddToCart}>Ajouter au panier</button>
+      <button onClick={addToCart}>
+        Ajouter au panier
+      </button>
     </div>
   );
 }
 
 export default Product;
-
