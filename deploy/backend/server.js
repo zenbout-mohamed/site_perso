@@ -2,6 +2,13 @@ const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
+const bcrypt = require("bcrypt"); 
+
+// Génération du hash
+
+const hash = bcrypt.hashSync("secret", 10);
+console.log("Hash du password :", hash);
+
 
 const app = express();
 const port = 3001;
@@ -9,14 +16,11 @@ const port = 3001;
 app.use(cors());
 app.use(express.json());
 
-
 // Paths
-
 const PRODUCTS_FILE = path.join(__dirname, "products.json");
 const USERS_FILE = path.join(__dirname, "users.json");
 
 // Users
-
 function readUsers() {
   try {
     const raw = fs.readFileSync(USERS_FILE, "utf8");
@@ -27,10 +31,7 @@ function readUsers() {
   }
 }
 
-
-
 // Products
-
 function readProducts() {
   try {
     const raw = fs.readFileSync(PRODUCTS_FILE, "utf8");
@@ -98,7 +99,7 @@ app.post("/products", (req, res) => {
   res.status(201).json(newProduct);
 });
 
-// Route Login
+// Route Login (ANCIENNE VERSION, tu la remplaceras ensuite)
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
 
