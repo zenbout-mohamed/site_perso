@@ -10,6 +10,21 @@
   z-index: 10;
 }
 
+.navbar a { 
+  color: white; 
+  margin-right: 15px; 
+  text-decoration: none; 
+}
+
+.navbar button { 
+  background: #555; 
+  color: white; 
+  border: none; 
+  padding: 5px 10px; 
+  cursor: pointer; 
+}
+
+
 .navbar-left,
 .navbar-right {
   display: flex;
