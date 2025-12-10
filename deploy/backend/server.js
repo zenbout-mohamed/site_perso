@@ -4,12 +4,6 @@ const fs = require("fs");
 const path = require("path");
 const bcrypt = require("bcrypt"); 
 
-// Génération du hash
-
-const hash = bcrypt.hashSync("secret", 10);
-console.log("Hash du password :", hash);
-
-
 const app = express();
 const port = 3001;
 
